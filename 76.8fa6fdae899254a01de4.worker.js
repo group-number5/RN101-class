@@ -1,0 +1,2 @@
+this.webpackChunk([76],{83:function(e,n){!function(e){e.languages.erb=e.languages.extend("ruby",{}),e.languages.insertBefore("erb","comment",{delimiter:{pattern:/^<%=?|%>$/,alias:"punctuation"}}),e.hooks.add("before-tokenize",function(n){e.languages["markup-templating"].buildPlaceholders(n,"erb",/<%=?[\s\S]+?%>/g)}),e.hooks.add("after-tokenize",function(n){e.languages["markup-templating"].tokenizePlaceholders(n,"erb")})}(Prism)}});
+//# sourceMappingURL=76.8fa6fdae899254a01de4.worker.js.map

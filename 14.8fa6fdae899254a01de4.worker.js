@@ -1,0 +1,2 @@
+this.webpackChunk([14],{21:function(n,t){Prism.languages.arff={comment:/%.*/,string:{pattern:/(["'])(?:\\.|(?!\1)[^\\\r\n])*\1/,greedy:!0},keyword:/@(?:attribute|data|end|relation)\b/i,number:/\b\d+(?:\.\d+)?\b/,punctuation:/[{},]/}}});
+//# sourceMappingURL=14.8fa6fdae899254a01de4.worker.js.map
