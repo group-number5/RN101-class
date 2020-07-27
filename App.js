@@ -30,6 +30,7 @@ export default class App extends React.Component {
           <Stack.Screen
             name="Home"
             component={HomeScreen}
+            options={{ title: 'Cities' }}
           />
         </Stack.Navigator>
       </NavigationContainer>
