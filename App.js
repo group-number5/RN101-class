@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Image, StyleSheet, Text, ScrollView, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 
 // after `expo install react-native-safe-area-context`.
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -94,9 +94,11 @@ export default class App extends React.Component {
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <ScrollView style={styles.container}>
-          {this.fruits.map(this.renderItem)}
-        </ScrollView>
+        <FlatList style={styles.container}
+          renderItem={({ item }) => this.renderItem(item)}
+          data={this.fruits}
+        />
+
         <StatusBar style="auto" />
       </SafeAreaView>
     );
