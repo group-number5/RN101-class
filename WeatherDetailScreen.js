@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { ActivityIndicator, StyleSheet, View, Text } from 'react-native';
 import Constants from 'expo-constants';
 
 const {
@@ -50,7 +50,7 @@ export default class WeatherDetailScreen extends React.Component {
     if (this.state.isLoading) {
       return (
         <View style={styles.container}>
-          <Text>데이터를 불러오는 중입니다.</Text>
+          <ActivityIndicator size="large" />
         </View>
       )
     }
