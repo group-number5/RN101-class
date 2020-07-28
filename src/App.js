@@ -5,8 +5,8 @@ import { StatusBar } from 'expo-status-bar';
 import { View, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import CityList from './CityList';
-import WeatherDetailScreen from './WeatherDetailScreen';
+import CityList from './screens/CityList';
+import WeatherDetailScreen from './screens/WeatherDetailScreen';
 
 const HomeScreen = ({ navigation }) => (
   <View style={styles.container}>
