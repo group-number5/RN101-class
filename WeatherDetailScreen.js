@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator, StyleSheet, View, Text } from 'react-native';
+import { ActivityIndicator, Image, StyleSheet, View, Text } from 'react-native';
 import Constants from 'expo-constants';
 
 const {
@@ -45,6 +45,23 @@ export default class WeatherDetailScreen extends React.Component {
     )
   }
 
+  renderWeatherCondition() {
+    // https://openweathermap.org/weather-conditions
+    return this.state.weather.map(({
+      icon,
+    }, index) => {
+      return (
+        <View key={index}>
+          <Image source={{
+            uri: `http://openweathermap.org/img/wn/${icon}@2x.png`,
+            width: 72,
+            height: 72
+          }} />
+        </View>
+      );
+    });
+  }
+
   render() {
     const {
       route: {
@@ -66,6 +83,7 @@ export default class WeatherDetailScreen extends React.Component {
     return (
       <View style={styles.container}>
         {this.renderTemperature()}
+        {this.renderWeatherCondition()}
       </View>
     );
   }
