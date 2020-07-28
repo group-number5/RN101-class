@@ -1,8 +1,14 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
+import Constants from 'expo-constants';
 
-const API_KEY = '{YOUR_API_KEY}';
-const queryUrl = (city) => `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`
+const {
+  apiKey,
+  baseUrl,
+  region,
+} = Constants.manifest.extra.openWeatherApi;
+
+const queryUrl = (city) => `${baseUrl}/weather?q=${city}&appid=${apiKey}&lang=${region}`
 
 export default class WeatherDetailScreen extends React.Component {
   constructor(props) {
