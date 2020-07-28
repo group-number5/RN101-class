@@ -1,5 +1,6 @@
 import React from 'react';
 import { FlatList, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import cityListApi from '../api/CityListApi';
 
 export default class CityList extends React.Component {
   constructor(props) {
@@ -11,8 +12,7 @@ export default class CityList extends React.Component {
   }
 
   componentDidMount() {
-    fetch('https://raw.githubusercontent.com/example0312/weather-crawler/master/availableCityNames')
-      .then(response => response.json())
+    cityListApi.fetchAvailableCities()
       .then(cities => {
         this.setState({
           cities

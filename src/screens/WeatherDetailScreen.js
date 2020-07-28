@@ -1,14 +1,6 @@
 import React from 'react';
 import { ActivityIndicator, Image, StyleSheet, View, Text } from 'react-native';
-import Constants from 'expo-constants';
-
-const {
-  apiKey,
-  baseUrl,
-  region,
-} = Constants.manifest.extra.openWeatherApi;
-
-const queryUrl = (city) => `${baseUrl}/weather?q=${city}&appid=${apiKey}&lang=${region}`
+import openWeatherApi from '../api/OpenWeatherApi';
 
 export default class WeatherDetailScreen extends React.Component {
   constructor(props) {
@@ -20,14 +12,9 @@ export default class WeatherDetailScreen extends React.Component {
   }
 
   componentDidMount() {
-    const {
-      route: {
-        params: { city },
-      },
-    } = this.props;
+    this.setState({ isLoading: true });
 
-    fetch(queryUrl(city))
-      .then(response => response.json())
+    openWeatherApi.fetchWeatherInfoByCityName(this.props.route.params.city)
       .then(info => {
         console.log(info);
         this.setState({
