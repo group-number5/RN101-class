@@ -14,15 +14,15 @@ export const HomeScreen = ({ navigation }) => {
 
 
   const addToFavouriteCities = (city) =>{
-    if(favouriteCities.indexOf(city)>-1){
-      setFavouriteCities([
-        city, favouriteCities.slice(0,3)
-      ])
+    if(favouriteCities.indexOf(city)==-1){
+      setFavouriteCities(
+        [city].concat(favouriteCities.slice(0,2))
+      )
     }
     else{
-      setFavouriteCities([
-        city, favouriteCities.slice(0,favouriteCities.indexOf(city)),favouriteCities.slice(favouriteCities.indexOf(city)+1)
-      ])
+      setFavouriteCities(
+        [city].concat(favouriteCities.slice(0,favouriteCities.indexOf(city)),favouriteCities.slice(favouriteCities.indexOf(city)+1))
+      )
     }
   }
 
