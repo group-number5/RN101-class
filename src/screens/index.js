@@ -4,6 +4,7 @@ import { View, StyleSheet } from 'react-native';
 
 import CityList from './CityList';
 import WeatherDetailScreen from './WeatherDetailScreen';
+import FavouriteCityList from './FavouriteCityList';
 
 export const HomeScreen = ({ navigation }) => {
   const [favouriteCities, setFavouriteCities] = useState([]);
@@ -28,6 +29,7 @@ export const HomeScreen = ({ navigation }) => {
 
   return(
     <View style={styles.container}>
+      <FavouriteCityList navigation={navigation} favouriteCities = {favouriteCities} addToFavouriteCities = {addToFavouriteCities} />
       <CityList navigation={navigation} addToFavouriteCities = {addToFavouriteCities} />
       <StatusBar style="auto" />
     </View>
