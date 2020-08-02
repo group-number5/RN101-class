@@ -4,6 +4,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import openWeatherApi from '../api/OpenWeatherApi';
 import Constants from 'expo-constants';
 import _get from 'lodash.get';
+import { LinearGradient } from 'expo-linear-gradient';
+import Icon from 'react-native-vector-icons';
 
 export default class WeatherDetailScreen extends React.Component {
   constructor(props) {
@@ -24,27 +26,55 @@ export default class WeatherDetailScreen extends React.Component {
           ...info,
           isLoading: false,
         });
-      });
+      })
+      .catch(err => err)
   }
+
+  renderSunrise(){
+    const sunrise = this.state.sys.sunrise;
+    const date = new Date(sunrise * 1000);
+    const hours = date.getHours();
+    const minutes = "0" + date.getMinutes();
+    const seconds = "0" + date.getSeconds();
+    const formattedTime = hours + ":" +minutes.substr(-2) + ":" + seconds.substr(-2);
+    return(
+      <Text>
+     
+      일출: {formattedTime}</Text>
+    )
+    }
+
+  renderSunset(){
+    const sunset = this.state.sys.sunset;
+    const date = new Date(sunset * 1000);
+    const hours = date.getHours();
+    const minutes = "0" + date.getMinutes();
+    const seconds = "0" + date.getSeconds();
+    const formattedTime = hours + ":" +minutes.substr(-2) + ":" + seconds.substr(-2);
+    return(
+      <Text>일몰: {formattedTime}</Text>
+    )
+  }
+
 
   renderTemperature() {
     const celsius = this.state.main.temp - 273.15;
-
+    const humidity = this.state.main.humidity;
     return (
-      <Text>온도: {celsius.toFixed(1)}</Text>
+      <Text>온도: {celsius.toFixed(1)}</Text>,
+      <Text>습도: {humidity}%</Text>
     )
   }
 
   renderClouds() {
     const clouds = _get(this.state, ['clouds', 'all'], null);
-
     const cloudStatus = [
       '맑음',
       '구름 조금',
       '구름 많음',
       '흐림',
       '매우 흐림'
-    ];
+    ];  
 
     const text = (clouds === null) ? '정보 없음' : cloudStatus[Math.max(parseInt(clouds / 20), 4)];
 
@@ -139,9 +169,15 @@ export default class WeatherDetailScreen extends React.Component {
     }
     
     return (
+      <LinearGradient
+      colors={['#448AFF', '#9E9E9E', '#FFEB3B', '#FF5722']}
+      style={styles.container}
+      >
       <View style={styles.container}>
         {this.renderClouds()}
         {this.renderTemperature()}
+        {this.renderSunrise()}
+        {this.renderSunset()}
         {this.renderWind()}
         <View style={styles.inRow}>
           {this.renderWeatherCondition()}
@@ -149,6 +185,7 @@ export default class WeatherDetailScreen extends React.Component {
 
         {this.renderGoogleMap()}
       </View>
+      </LinearGradient>
     );
   }
 }
@@ -156,7 +193,7 @@ export default class WeatherDetailScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#8888FF',
+    backgroundColor: 'transparent',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -173,6 +210,8 @@ const styles = StyleSheet.create({
   },
   mapImage: {
     aspectRatio: 1,
+    width:200,
+    height:300
   },
   weatherCondition: {
     justifyContent: 'center',
