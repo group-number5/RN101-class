@@ -26,7 +26,7 @@ export default class WeatherDetailScreen extends React.Component {
         });
       })
       .catch(err => err)
-  }W
+  }
 
   renderTemperature() {
     const celsius = this.state.main.temp - 273.15;
