@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import {
   HomeScreen,
   DetailScreen,
+  FavouriteScreen
 } from './screens';
 
 export default class App extends React.Component {
@@ -26,6 +27,7 @@ export default class App extends React.Component {
             component={DetailScreen}
             options={{ title: '날씨' }}
           />
+          
         </Stack.Navigator>
       </NavigationContainer>
     );

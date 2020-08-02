@@ -5,7 +5,7 @@ import openWeatherApi from '../api/OpenWeatherApi';
 import Constants from 'expo-constants';
 import _get from 'lodash.get';
 import { LinearGradient } from 'expo-linear-gradient';
-import PorpTypes from 'prop-types'
+import Icon from 'react-native-vector-icons';
 
 export default class WeatherDetailScreen extends React.Component {
   constructor(props) {
@@ -26,7 +26,8 @@ export default class WeatherDetailScreen extends React.Component {
           ...info,
           isLoading: false,
         });
-      });
+      })
+      .catch(err => err)
   }
 
   renderSunrise(){
@@ -37,7 +38,9 @@ export default class WeatherDetailScreen extends React.Component {
     const seconds = "0" + date.getSeconds();
     const formattedTime = hours + ":" +minutes.substr(-2) + ":" + seconds.substr(-2);
     return(
-      <Text>일출: {formattedTime}</Text>
+      <Text>
+     
+      일출: {formattedTime}</Text>
     )
     }
 
