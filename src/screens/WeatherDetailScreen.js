@@ -5,7 +5,7 @@ import openWeatherApi from '../api/OpenWeatherApi';
 import Constants from 'expo-constants';
 import _get from 'lodash.get';
 import { LinearGradient } from 'expo-linear-gradient';
-import Icon from 'react-native-vector-icons';
+
 
 export default class WeatherDetailScreen extends React.Component {
   constructor(props) {
