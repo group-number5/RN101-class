@@ -4,7 +4,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import openWeatherApi from '../api/OpenWeatherApi';
 import Constants from 'expo-constants';
 import _get from 'lodash.get';
-import { LinearGradient } from 'expo';
+import { LinearGradient } from 'expo-linear-gradient';
+import PorpTypes from 'prop-types'
 
 export default class WeatherDetailScreen extends React.Component {
   constructor(props) {
@@ -28,10 +29,34 @@ export default class WeatherDetailScreen extends React.Component {
       });
   }
 
+  renderSunrise(){
+    const sunrise = this.state.sys.sunrise;
+    const date = new Date(sunrise * 1000);
+    const hours = date.getHours();
+    const minutes = "0" + date.getMinutes();
+    const seconds = "0" + date.getSeconds();
+    const formattedTime = hours + ":" +minutes.substr(-2) + ":" + seconds.substr(-2);
+    return(
+      <Text>일출: {formattedTime}</Text>
+    )
+    }
+
+  renderSunset(){
+    const sunset = this.state.sys.sunset;
+    const date = new Date(sunset * 1000);
+    const hours = date.getHours();
+    const minutes = "0" + date.getMinutes();
+    const seconds = "0" + date.getSeconds();
+    const formattedTime = hours + ":" +minutes.substr(-2) + ":" + seconds.substr(-2);
+    return(
+      <Text>일몰: {formattedTime}</Text>
+    )
+  }
+
+
   renderTemperature() {
     const celsius = this.state.main.temp - 273.15;
     const humidity = this.state.main.humidity;
-
     return (
       <Text>온도: {celsius.toFixed(1)}</Text>,
       <Text>습도: {humidity}%</Text>
@@ -40,7 +65,6 @@ export default class WeatherDetailScreen extends React.Component {
 
   renderClouds() {
     const clouds = _get(this.state, ['clouds', 'all'], null);
-
     const cloudStatus = [
       '맑음',
       '구름 조금',
@@ -143,12 +167,14 @@ export default class WeatherDetailScreen extends React.Component {
     
     return (
       <LinearGradient
-      colors={["#00C6FB","#005BEA"]}
+      colors={['#448AFF', '#9E9E9E', '#FFEB3B', '#FF5722']}
       style={styles.container}
       >
-      <View style={styles.upper}>
+      <View style={styles.container}>
         {this.renderClouds()}
         {this.renderTemperature()}
+        {this.renderSunrise()}
+        {this.renderSunset()}
         {this.renderWind()}
         <View style={styles.inRow}>
           {this.renderWeatherCondition()}
@@ -181,6 +207,8 @@ const styles = StyleSheet.create({
   },
   mapImage: {
     aspectRatio: 1,
+    width:200,
+    height:300
   },
   weatherCondition: {
     justifyContent: 'center',
