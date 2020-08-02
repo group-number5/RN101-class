@@ -3,6 +3,7 @@ import { FlatList, StyleSheet, Text, TouchableOpacity,Platform,ActivityIndicator
 import { SearchBar } from 'react-native-elements';
 import cityListApi from '../api/CityListApi';
 
+
 export default class CityList extends React.Component {
   constructor(props) {
     super(props);
@@ -23,6 +24,7 @@ export default class CityList extends React.Component {
           isLoading:false,
           cities
         });
+        this.arrayholder = cities;
       });
   }
 
@@ -51,12 +53,12 @@ export default class CityList extends React.Component {
 
   SearchFilterFunction(text) {
     const newData = this.arrayholder.filter(function(item) {
-      const itemData = item.title ? item.title.toUpperCase() : ''.toUpperCase();
+      const itemData = item ? item.toUpperCase() : ''.toUpperCase();
       const textData = text.toUpperCase();
       return itemData.indexOf(textData) > -1;
     });
     this.setState({
-      dataSource: newData,
+      cities: newData,
       search: text,
     });
   }

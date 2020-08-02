@@ -4,6 +4,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import openWeatherApi from '../api/OpenWeatherApi';
 import Constants from 'expo-constants';
 import _get from 'lodash.get';
+import { LinearGradient } from 'expo';
 
 export default class WeatherDetailScreen extends React.Component {
   constructor(props) {
@@ -46,7 +47,7 @@ export default class WeatherDetailScreen extends React.Component {
       '구름 많음',
       '흐림',
       '매우 흐림'
-    ];
+    ];  
 
     const text = (clouds === null) ? '정보 없음' : cloudStatus[Math.max(parseInt(clouds / 20), 4)];
 
@@ -141,7 +142,11 @@ export default class WeatherDetailScreen extends React.Component {
     }
     
     return (
-      <View style={styles.container}>
+      <LinearGradient
+      colors={["#00C6FB","#005BEA"]}
+      style={styles.container}
+      >
+      <View style={styles.upper}>
         {this.renderClouds()}
         {this.renderTemperature()}
         {this.renderWind()}
@@ -151,6 +156,7 @@ export default class WeatherDetailScreen extends React.Component {
 
         {this.renderGoogleMap()}
       </View>
+      </LinearGradient>
     );
   }
 }
@@ -158,7 +164,7 @@ export default class WeatherDetailScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#8888FF',
+    backgroundColor: 'transparent',
     alignItems: 'center',
     justifyContent: 'center',
   },
