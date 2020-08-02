@@ -108,7 +108,6 @@ export default class WeatherDetailScreen extends React.Component {
   }
 
   renderWeatherCondition() {
-    // https://openweathermap.org/weather-conditions
     return this.state.weather.map(({
       icon,
       description,
