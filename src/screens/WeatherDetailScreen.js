@@ -39,7 +39,7 @@ export default class WeatherDetailScreen extends React.Component {
     const formattedTime = hours + ":" +minutes.substr(-2) + ":" + seconds.substr(-2);
     return(
       <Text>
-        <Icon name="sunrise" size={15} color="#900" />
+        <Icon name="sunrise" size={15} color="#ffff00" />
         일출: {formattedTime}
       </Text>
     )
@@ -54,7 +54,7 @@ export default class WeatherDetailScreen extends React.Component {
     const formattedTime = hours + ":" +minutes.substr(-2) + ":" + seconds.substr(-2);
     return(
       <Text>
-        <Icon name="sunset" size={15} color="#900" />
+        <Icon name="sunset" size={15} color="#ffff00" />
         일몰: {formattedTime}
         </Text>
     )
@@ -64,7 +64,7 @@ export default class WeatherDetailScreen extends React.Component {
     const humidity = this.state.main.humidity;
     return(
       <Text>
-         <Icon name="cloud-drizzle" size={15} color="#900" />
+         <Icon name="cloud-drizzle" size={15} color="#f8f8ff" />
         습도:{humidity}
         </Text>
     )
@@ -94,7 +94,7 @@ export default class WeatherDetailScreen extends React.Component {
 
     return (
       <Text>
-        <Icon name="cloud" size={15} color="#900" />
+        <Icon name="cloud" size={15} color="#a9a9a9" />
         구름: {text}
         </Text>
     );
@@ -125,7 +125,7 @@ export default class WeatherDetailScreen extends React.Component {
     return (
       <View style={[styles.inRow, styles.alignItemInCenter]}>
         <Text>
-        <Icon name="wind" size={15} color="#900" />
+        <Icon name="wind" size={15} color="#00bfff" />
           풍속: {speed? `${speed}m/s` : '정보 없음'}
         </Text>
         <View style={[arrowStyle]}>
