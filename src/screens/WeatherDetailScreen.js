@@ -5,7 +5,7 @@ import openWeatherApi from '../api/OpenWeatherApi';
 import Constants from 'expo-constants';
 import _get from 'lodash.get';
 import { LinearGradient } from 'expo-linear-gradient';
-import Icon from 'react-native-vector-icons';
+import Icon from 'react-native-vector-icons/Feather';
 
 export default class WeatherDetailScreen extends React.Component {
   constructor(props) {
@@ -39,8 +39,9 @@ export default class WeatherDetailScreen extends React.Component {
     const formattedTime = hours + ":" +minutes.substr(-2) + ":" + seconds.substr(-2);
     return(
       <Text>
-     
-      일출: {formattedTime}</Text>
+        <Icon name="sunrise" size={15} color="#900" />
+        일출: {formattedTime}
+      </Text>
     )
     }
 
@@ -52,17 +53,30 @@ export default class WeatherDetailScreen extends React.Component {
     const seconds = "0" + date.getSeconds();
     const formattedTime = hours + ":" +minutes.substr(-2) + ":" + seconds.substr(-2);
     return(
-      <Text>일몰: {formattedTime}</Text>
+      <Text>
+        <Icon name="sunset" size={15} color="#900" />
+        일몰: {formattedTime}
+        </Text>
     )
   }
 
+  renderHumidity(){
+    const humidity = this.state.main.humidity;
+    return(
+      <Text>
+         <Icon name="cloud-drizzle" size={15} color="#900" />
+        습도:{humidity}
+        </Text>
+    )
+  }
 
   renderTemperature() {
     const celsius = this.state.main.temp - 273.15;
-    const humidity = this.state.main.humidity;
     return (
-      <Text>온도: {celsius.toFixed(1)}</Text>,
-      <Text>습도: {humidity}%</Text>
+      <Text>
+         <Icon name="thermometer" size={15} color="#900" />
+        온도: {celsius.toFixed(1)}
+        </Text>
     )
   }
 
@@ -79,7 +93,10 @@ export default class WeatherDetailScreen extends React.Component {
     const text = (clouds === null) ? '정보 없음' : cloudStatus[Math.max(parseInt(clouds / 20), 4)];
 
     return (
-      <Text>구름: {text}</Text>
+      <Text>
+        <Icon name="cloud" size={15} color="#900" />
+        구름: {text}
+        </Text>
     );
   }
 
@@ -98,6 +115,7 @@ export default class WeatherDetailScreen extends React.Component {
     return (
       <View style={[styles.inRow, styles.alignItemInCenter]}>
         <Text>
+        <Icon name="wind" size={15} color="#900" />
           풍속: {speed? `${speed}m/s` : '정보 없음'}
         </Text>
         <View style={[arrowStyle]}>
@@ -176,6 +194,7 @@ export default class WeatherDetailScreen extends React.Component {
       <View style={styles.container}>
         {this.renderClouds()}
         {this.renderTemperature()}
+        {this.renderHumidity()}
         {this.renderSunrise()}
         {this.renderSunset()}
         {this.renderWind()}
@@ -219,6 +238,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   textCondition: {
+    fontSize: 30,
     color: '#FFF',
   },
   rotation: {
