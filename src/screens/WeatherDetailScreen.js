@@ -99,6 +99,16 @@ export default class WeatherDetailScreen extends React.Component {
         </Text>
     );
   }
+  
+  renderFeelsLike(){
+    const feelslike = this.state.main.feels_like - 273.15;
+    return(
+      <Text>
+         <Icon name="thermometer" size={15} color="#900" />
+        체감온도:{feelslike.toFixed(1)}
+        </Text>
+    )
+  }
 
   renderWind() {
     const speed = _get(this.state, ['wind', 'speed'], null);
@@ -194,6 +204,7 @@ export default class WeatherDetailScreen extends React.Component {
       <View style={styles.container}>
         {this.renderClouds()}
         {this.renderTemperature()}
+        {this.renderFeelsLike()}
         {this.renderHumidity()}
         {this.renderSunrise()}
         {this.renderSunset()}
