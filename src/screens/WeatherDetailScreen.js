@@ -35,8 +35,8 @@ export default class WeatherDetailScreen extends React.Component {
 
     return (
       <Text>
-        온도: {celsius.toFixed(1)}°C 최저기온: {celsiusMin.toFixed(1)}°C
-        최고기온: {celsiusMax.toFixed(1)}°C{" "}
+        온도: {celsius.toFixed(1)}°C 최저 기온: {celsiusMin.toFixed(1)}°C 최고
+        기온: {celsiusMax.toFixed(1)}°C{" "}
       </Text>
     );
   }
