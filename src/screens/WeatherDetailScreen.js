@@ -24,7 +24,8 @@ export default class WeatherDetailScreen extends React.Component {
           ...info,
           isLoading: false,
         });
-      });
+      })
+      .catch(err => err)
   }
 
   renderTemperature() {
