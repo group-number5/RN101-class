@@ -1,9 +1,11 @@
-import React from "react";
-import { ActivityIndicator, Image, StyleSheet, View, Text } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import openWeatherApi from "../api/OpenWeatherApi";
-import Constants from "expo-constants";
-import _get from "lodash.get";
+import React from 'react';
+import { ActivityIndicator, Image, StyleSheet, View, Text } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import openWeatherApi from '../api/OpenWeatherApi';
+import Constants from 'expo-constants';
+import _get from 'lodash.get';
+import { LinearGradient } from 'expo-linear-gradient';
+import Icon from 'react-native-vector-icons/Feather';
 
 export default class WeatherDetailScreen extends React.Component {
   constructor(props) {
@@ -25,7 +27,48 @@ export default class WeatherDetailScreen extends React.Component {
           ...info,
           isLoading: false,
         });
-      });
+      })
+      .catch(err => err)
+  }
+
+  renderSunrise(){
+    const sunrise = this.state.sys.sunrise;
+    const date = new Date(sunrise * 1000);
+    const hours = date.getHours();
+    const minutes = "0" + date.getMinutes();
+    const seconds = "0" + date.getSeconds();
+    const formattedTime = hours + ":" +minutes.substr(-2) + ":" + seconds.substr(-2);
+    return(
+      <Text>
+        <Icon name="sunrise" size={15} color="#ffff00" />
+        일출: {formattedTime}
+      </Text>
+    )
+    }
+
+  renderSunset(){
+    const sunset = this.state.sys.sunset;
+    const date = new Date(sunset * 1000);
+    const hours = date.getHours();
+    const minutes = "0" + date.getMinutes();
+    const seconds = "0" + date.getSeconds();
+    const formattedTime = hours + ":" +minutes.substr(-2) + ":" + seconds.substr(-2);
+    return(
+      <Text>
+        <Icon name="sunset" size={15} color="#ffff00" />
+        일몰: {formattedTime}
+        </Text>
+    )
+  }
+
+  renderHumidity(){
+    const humidity = this.state.main.humidity;
+    return(
+      <Text>
+         <Icon name="cloud-drizzle" size={15} color="#f8f8ff" />
+        습도:{humidity}
+        </Text>
+    )
   }
 
   renderTemperature() {
@@ -35,7 +78,7 @@ export default class WeatherDetailScreen extends React.Component {
 
     return (
       <Text>
-        온도: {celsius.toFixed(1)}°C 최저 기온: {celsiusMin.toFixed(1)}°C 최고
+        <Icon name="thermometer" size={15} color="#900" />온도: {celsius.toFixed(1)}°C 최저 기온: {celsiusMin.toFixed(1)}°C 최고
         기온: {celsiusMax.toFixed(1)}°C{" "}
       </Text>
     );
@@ -45,13 +88,26 @@ export default class WeatherDetailScreen extends React.Component {
     const clouds = _get(this.state, ["clouds", "all"], null);
 
     const cloudStatus = ["맑음", "구름 조금", "구름 많음", "흐림", "매우 흐림"];
-
     const text =
       clouds === null
         ? "정보 없음"
         : cloudStatus[Math.max(parseInt(clouds / 20), 4)];
-
-    return <Text>구름: {text}</Text>;
+    return (
+      <Text>
+        <Icon name="cloud" size={15} color="#a9a9a9" />
+        구름: {text}
+        </Text>
+    );
+  }
+  
+  renderFeelsLike(){
+    const feelslike = this.state.main.feels_like - 273.15;
+    return(
+      <Text>
+         <Icon name="thermometer" size={15} color="#900" />
+        체감온도:{feelslike.toFixed(1)}
+        </Text>
+    )
   }
 
   renderWind() {
@@ -66,7 +122,10 @@ export default class WeatherDetailScreen extends React.Component {
 
     return (
       <View style={[styles.inRow, styles.alignItemInCenter]}>
-        <Text>풍속: {speed ? `${speed}m/s` : "정보 없음"}</Text>
+        <Text>
+        <Icon name="wind" size={15} color="#00bfff" />
+          풍속: {speed? `${speed}m/s` : '정보 없음'}
+        </Text>
         <View style={[arrowStyle]}>
           <MaterialCommunityIcons
             name="arrow-up-circle"
@@ -142,14 +201,23 @@ export default class WeatherDetailScreen extends React.Component {
     }
 
     return (
+      <LinearGradient
+      colors={['#448AFF', '#9E9E9E', '#FFEB3B', '#FF5722']}
+      style={styles.container}
+      >
       <View style={styles.container}>
         {this.renderClouds()}
         {this.renderTemperature()}
+        {this.renderFeelsLike()}
+        {this.renderHumidity()}
+        {this.renderSunrise()}
+        {this.renderSunset()}
         {this.renderWind()}
         <View style={styles.inRow}>{this.renderWeatherCondition()}</View>
 
         {this.renderGoogleMap()}
       </View>
+      </LinearGradient>
     );
   }
 }
@@ -174,6 +242,8 @@ const styles = StyleSheet.create({
   },
   mapImage: {
     aspectRatio: 1,
+    width:200,
+    height:300
   },
   weatherCondition: {
     justifyContent: "center",
@@ -181,7 +251,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   textCondition: {
-    color: "#FFF",
+    fontSize: 30,
+    color: '#FFF',
   },
   rotation: {
     width: 50,

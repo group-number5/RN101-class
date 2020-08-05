@@ -1,28 +1,38 @@
-import React from "react";
-import { FlatList, StyleSheet, Text, TouchableOpacity } from "react-native";
-import cityListApi from "../api/CityListApi";
+import React from 'react';
+import { FlatList, StyleSheet, Text, TouchableOpacity,Platform,ActivityIndicator,View,TextInput} from 'react-native';
+import { SearchBar } from 'react-native-elements';
+import cityListApi from '../api/CityListApi';
 
 export default class CityList extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      isLoading: true,
+      search: '',
       cities: [],
     };
+    this.arrayholder=[];
   }
+  
 
   componentDidMount() {
-    cityListApi.fetchAvailableCities().then(cities => {
-      this.setState({
-        cities,
+    cityListApi.fetchAvailableCities()
+      .then(cities => {
+        this.setState({
+          isLoading:false,
+          cities
+        });
+        this.arrayholder = cities;
       });
     });
   }
 
   onPressCity(item) {
-    console.log("onPressCity =", item);
-    this.props.navigation.navigate("Detail", {
-      city: item,
+    console.log('onPressCity =', item);
+    this.props.addToFavouriteCities(item)
+    this.props.navigation.navigate('Detail', {
+      city: item
     });
   }
 
@@ -37,15 +47,60 @@ export default class CityList extends React.Component {
     );
   }
 
+  search = text =>{
+    console.log(text);
+  };
+  
+  clear = () =>{
+    this.search.clear();
+  };
+
+  SearchFilterFunction(text) {
+    const newData = this.arrayholder.filter(function(item) {
+      const itemData = item ? item.toUpperCase() : ''.toUpperCase();
+      const textData = text.toUpperCase();
+      return itemData.indexOf(textData) > -1;
+    });
+    this.setState({
+      cities: newData,
+      search: text,
+    });
+  }
+
+  ListViewItemSeparator = () => {
+    //Item sparator view
+    return (
+      <View
+        style={{
+          height: 0.3,
+          width: '90%',
+          backgroundColor: '#080808',
+        }}
+      />
+    );
+  };
+
   render() {
     return (
+      <View style={styles.viewStyle}>
+      <SearchBar
+        round
+        searchIcon={{ size: 24 }}
+        onChangeText={text => this.SearchFilterFunction(text)}
+        onClear={text => this.SearchFilterFunction('')}
+        placeholder="Type Here..."
+        value={this.state.search}
+      />
       <FlatList
         style={styles.container}
-        numColumns={3}
+        numColumns={3} 
+        Data={this.state.dataSource}
+        ItemSeparatorComponent={this.ListViewItemSeparator}
         renderItem={({ item }) => this.renderItem(item)}
         keyExtractor={item => item}
         data={this.state.cities}
       />
+    </View>
     );
   }
 }
