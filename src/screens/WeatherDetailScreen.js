@@ -225,7 +225,7 @@ export default class WeatherDetailScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#8888FF",
+    backgroundColor: "transparent",
     alignItems: "center",
     justifyContent: "center",
   },
