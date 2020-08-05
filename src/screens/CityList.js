@@ -25,7 +25,6 @@ export default class CityList extends React.Component {
         });
         this.arrayholder = cities;
       });
-    });
   }
 
   onPressCity(item) {
@@ -93,7 +92,7 @@ export default class CityList extends React.Component {
       />
       <FlatList
         style={styles.container}
-        numColumns={3} 
+        numColumns={3}
         Data={this.state.dataSource}
         ItemSeparatorComponent={this.ListViewItemSeparator}
         renderItem={({ item }) => this.renderItem(item)}
@@ -107,7 +106,6 @@ export default class CityList extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: "#000",
   },
   item: {
