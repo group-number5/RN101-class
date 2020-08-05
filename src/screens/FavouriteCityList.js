@@ -26,7 +26,7 @@ export default FavouriteCityList = (props) => {
 
     return (
         <View>
-            {console.log("testing: ",cities)}
+            <Text style = {{textAlign : 'center'}}>최근 검색</Text>
             <FlatList style={styles.container}
                         numColumns={3}
                         renderItem={({ item }) => renderItem(item)}

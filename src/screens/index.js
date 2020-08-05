@@ -6,6 +6,7 @@ import CityList from './CityList';
 import WeatherDetailScreen from './WeatherDetailScreen';
 import FavouriteCityList from './FavouriteCityList';
 
+
 export const HomeScreen = ({ navigation }) => {
   const [favouriteCities, setFavouriteCities] = useState([]);
 
@@ -42,7 +43,6 @@ export const DetailScreen = ({ navigation, route }) => (
     <StatusBar style="auto" />
   </View>
 );
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
