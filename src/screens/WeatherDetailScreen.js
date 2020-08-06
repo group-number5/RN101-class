@@ -237,7 +237,7 @@ export default class WeatherDetailScreen extends React.Component {
       {
           condition= ['#6c446c','#350f4c']
       }
-
+      return condition;
   }
 
     render() {
@@ -261,7 +261,7 @@ export default class WeatherDetailScreen extends React.Component {
     
     return (
       <LinearGradient
-      colors={this.renderData().condition}
+      colors={this.renderData()}
       style={styles.container}
       >
           <StatusBar barStyle={"light-content"} />
