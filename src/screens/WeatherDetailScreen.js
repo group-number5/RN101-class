@@ -1,5 +1,5 @@
 import React from 'react';
-import {ActivityIndicator, Image, StyleSheet, View, Text, StatusBar} from 'react-native';
+import { ActivityIndicator, Image, StyleSheet, View, Text , StatusBar } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import openWeatherApi from '../api/OpenWeatherApi';
 import Constants from 'expo-constants';
@@ -20,7 +20,8 @@ export default class WeatherDetailScreen extends React.Component {
   componentDidMount() {
     this.setState({ isLoading: true });
 
-    openWeatherApi.fetchWeatherInfoByCityName(this.props.route.params.city)
+    openWeatherApi
+      .fetchWeatherInfoByCityName(this.props.route.params.city)
       .then(info => {
         console.log(info);
         this.setState({
@@ -30,7 +31,6 @@ export default class WeatherDetailScreen extends React.Component {
       })
       .catch(err => err)
   }
-
 
   renderSunrise(){
     const sunrise = this.state.sys.sunrise;
@@ -74,15 +74,18 @@ export default class WeatherDetailScreen extends React.Component {
 
   renderTemperature() {
     const celsius = this.state.main.temp - 273.15;
+    const celsiusMin = this.state.main.temp_min - 273.15;
+    const celsiusMax = this.state.main.temp_max - 273.15;
+
     return (
       <Text>
-         <Icon name="thermometer" size={15} color="#900" />
-        온도: {celsius.toFixed(1)}
-        </Text>
-    )
+        <Icon name="thermometer" size={15} color="#900" />온도: {celsius.toFixed(1)}°C 최저 기온: {celsiusMin.toFixed(1)}°C 최고
+        기온: {celsiusMax.toFixed(1)}°C{" "}
+      </Text>
+    );
   }
-
- renderLocation()
+  
+  renderLocation()
  {
    const longitude = this.state.coord.lon;
    const latitude = this.state.coord.lat;
@@ -93,18 +96,15 @@ export default class WeatherDetailScreen extends React.Component {
        </Text>
    )
  }
+
   renderClouds() {
-    const clouds = _get(this.state, ['clouds', 'all'], null);
-    const cloudStatus = [
-      '맑음',
-      '구름 조금',
-      '구름 많음',
-      '흐림',
-      '매우 흐림'
-    ];  
+    const clouds = _get(this.state, ["clouds", "all"], null);
 
-    const text = (clouds === null) ? '정보 없음' : cloudStatus[Math.max(parseInt(clouds / 20), 4)];
-
+    const cloudStatus = ["맑음", "구름 조금", "구름 많음", "흐림", "매우 흐림"];
+    const text =
+      clouds === null
+        ? "정보 없음"
+        : cloudStatus[Math.max(parseInt(clouds / 20), 4)];
     return (
       <Text>
         <Icon name="cloud" size={15} color="#a9a9a9" />
@@ -124,13 +124,11 @@ export default class WeatherDetailScreen extends React.Component {
   }
 
   renderWind() {
-    const speed = _get(this.state, ['wind', 'speed'], null);
-    const deg = _get(this.state, ['wind', 'deg'], null);
-    
+    const speed = _get(this.state, ["wind", "speed"], null);
+    const deg = _get(this.state, ["wind", "deg"], null);
+
     const arrowStyle = {
-      transform: [
-         { rotate: `${deg}deg`}
-      ],
+      transform: [{ rotate: `${deg}deg` }],
       width: 24,
       height: 24,
     };
@@ -142,42 +140,42 @@ export default class WeatherDetailScreen extends React.Component {
           풍속: {speed? `${speed}m/s` : '정보 없음'}
         </Text>
         <View style={[arrowStyle]}>
-          <MaterialCommunityIcons name="arrow-up-circle" size={24} color="black" />
+          <MaterialCommunityIcons
+            name="arrow-up-circle"
+            size={24}
+            color="black"
+          />
         </View>
       </View>
     );
   }
 
-
-
   renderWeatherCondition() {
     // https://openweathermap.org/weather-conditions
-    return this.state.weather.map(({
-      icon,
-      description,
-    }, index) => {
+    return this.state.weather.map(({ icon, description }, index) => {
       return (
-
         <View style={styles.weatherCondition} key={index}>
-          <Image source={{
-            uri: `http://openweathermap.org/img/wn/${icon}@2x.png`,
-            width: 72,
-            height: 48
-          }} />
+          <Image
+            source={{
+              uri: `http://openweathermap.org/img/wn/${icon}@2x.png`,
+              width: 72,
+              height: 48,
+            }}
+          />
           <Text style={styles.textCondition}>{description}</Text>
         </View>
       );
     });
   }
 
-
-
   renderGoogleMap() {
-    const {
-      lat, lon
-    } = this.state.coord;
+    const { lat, lon } = this.state.coord;
 
-    const googleApiKey = _get(Constants, ['manifest', 'extra', 'googleApiKey'], null);
+    const googleApiKey = _get(
+      Constants,
+      ["manifest", "extra", "googleApiKey"],
+      null
+    );
 
     if (!googleApiKey) {
       return undefined;
@@ -187,17 +185,17 @@ export default class WeatherDetailScreen extends React.Component {
 
     return (
       <View style={styles.mapContainer}>
-        <Image style={styles.mapImage}
-          resizeMode={'stretch'}
-          resizeMethod={'scale'}
-          source={{ uri: url, }}
+        <Image
+          style={styles.mapImage}
+          resizeMode={"stretch"}
+          resizeMethod={"scale"}
+          source={{ uri: url }}
         />
       </View>
     );
   }
 
-
-  renderData(){
+renderData(){
       const data =this.state.weather.main;
       var condition;
 
@@ -240,7 +238,7 @@ export default class WeatherDetailScreen extends React.Component {
       return condition;
   }
 
-    render() {
+  render() {
     const {
       route: {
         params: { city },
@@ -255,18 +253,17 @@ export default class WeatherDetailScreen extends React.Component {
         <View style={styles.container}>
           <ActivityIndicator size="large" />
         </View>
-      )
+      );
     }
 
-    
     return (
       <LinearGradient
       colors={this.renderData()}
       style={styles.container}
       >
-          <StatusBar barStyle={"light-content"} />
+      <StatusBar barStyle={"light-content"} />
       <View style={styles.container}>
-          {this.renderLocation()}
+        {this.renderLocation()}
         {this.renderClouds()}
         {this.renderTemperature()}
         {this.renderFeelsLike()}
@@ -274,9 +271,7 @@ export default class WeatherDetailScreen extends React.Component {
         {this.renderSunrise()}
         {this.renderSunset()}
         {this.renderWind()}
-        <View style={styles.inRow}>
-          {this.renderWeatherCondition()}
-        </View>
+        <View style={styles.inRow}>{this.renderWeatherCondition()}</View>
 
         {this.renderGoogleMap()}
       </View>
@@ -288,20 +283,20 @@ export default class WeatherDetailScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'transparent',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "transparent",
+    alignItems: "center",
+    justifyContent: "center",
   },
   inRow: {
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   alignItemInCenter: {
-    alignItems: 'center',
+    alignItems: "center",
   },
   mapContainer: {
-    width: '90%',
+    width: "90%",
     borderWidth: 1,
-    borderColor: '#2222AA'
+    borderColor: "#2222AA",
   },
   mapImage: {
     aspectRatio: 1,
@@ -309,8 +304,8 @@ const styles = StyleSheet.create({
     height:300
   },
   weatherCondition: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginBottom: 20,
   },
   textCondition: {
@@ -320,6 +315,6 @@ const styles = StyleSheet.create({
   rotation: {
     width: 50,
     height: 50,
-    transform: [{ rotate: "5deg" }]
-  }
+    transform: [{ rotate: "5deg" }],
+  },
 });
