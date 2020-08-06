@@ -31,6 +31,7 @@ export default class WeatherDetailScreen extends React.Component {
       .catch(err => err)
   }
 
+
   renderSunrise(){
     const sunrise = this.state.sys.sunrise;
     const date = new Date(sunrise * 1000);
@@ -196,7 +197,50 @@ export default class WeatherDetailScreen extends React.Component {
   }
 
 
-  render() {
+  renderData(){
+      const data =this.state.weather.main;
+      var condition;
+
+      if(data=="ThunderStorm")
+      {
+          condition= ['#3C3B3F','#605C3C'];
+      }
+      else if(data=="Drizzle")
+      {
+          condition=['#F0F2F0','#000C40'];
+      }
+      else if(data=="Rain")
+      {
+          condition= ['#355C7D','#6C5B7B','#C06C84'];
+
+      }
+      else if(data=="Snow")
+      {
+          condition= ['#FFEEEE','#DDEFBB'];
+
+      }
+      else if(data=="Atmosphere")
+      {
+          condition=['#1F1C2C','#928DAB'];
+
+      }
+      else if(data=="Clear")
+      {
+          condition= ['#667db6','#0082c8','#667db6'];
+
+      }
+      else if(data=="Clouds")
+      {
+          condition= ['#353447','#1e2c52']
+      }
+      else
+      {
+          condition= ['#6c446c','#350f4c']
+      }
+
+  }
+
+    render() {
     const {
       route: {
         params: { city },
@@ -217,11 +261,10 @@ export default class WeatherDetailScreen extends React.Component {
     
     return (
       <LinearGradient
-      colors={['#448aff', '#9E9E9E', '#ffeb3b', '#FF5722']}
+      colors={this.renderData().condition}
       style={styles.container}
       >
-
-           <StatusBar barStyle={"light-content"} />
+          <StatusBar barStyle={"light-content"} />
       <View style={styles.container}>
           {this.renderLocation()}
         {this.renderClouds()}

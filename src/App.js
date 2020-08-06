@@ -16,7 +16,7 @@ export default class App extends React.Component {
     return (
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Home">
-          <Stack.Screen
+           <Stack.Screen
             name="Home"
             component={HomeScreen}
             options={{ title: '지역 선택' }}
