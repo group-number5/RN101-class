@@ -80,6 +80,17 @@ export default class WeatherDetailScreen extends React.Component {
     )
   }
 
+ renderLocation()
+ {
+   const longitude = this.state.coord.lon;
+   const latitude = this.state.coord.lat;
+   return (
+       <Text>
+         경도: {longitude.toFixed(1)}
+         위도: {latitude.toFixed(1)}
+       </Text>
+   )
+ }
   renderClouds() {
     const clouds = _get(this.state, ['clouds', 'all'], null);
     const cloudStatus = [
@@ -155,7 +166,7 @@ export default class WeatherDetailScreen extends React.Component {
   }
 
   renderGoogleMap() {
-    const { 
+    const {
       lat, lon
     } = this.state.coord;
 
@@ -202,6 +213,7 @@ export default class WeatherDetailScreen extends React.Component {
       style={styles.container}
       >
       <View style={styles.container}>
+          {this.renderLocation()}
         {this.renderClouds()}
         {this.renderTemperature()}
         {this.renderFeelsLike()}
