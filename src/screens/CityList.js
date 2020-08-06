@@ -105,6 +105,9 @@ export default class CityList extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  viewStyle: {
+    flex : 1,
+  },
   container: {
     backgroundColor: "#000",
   },

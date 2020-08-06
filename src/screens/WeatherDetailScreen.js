@@ -1,11 +1,12 @@
 import React from 'react';
-import { ActivityIndicator, Image, StyleSheet, View, Text } from 'react-native';
+import { ActivityIndicator, Image, StyleSheet, View, Text , StatusBar } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import openWeatherApi from '../api/OpenWeatherApi';
 import Constants from 'expo-constants';
 import _get from 'lodash.get';
 import { LinearGradient } from 'expo-linear-gradient';
 import Icon from 'react-native-vector-icons/Feather';
+import {PropsType} from "react-native/ReactCommon/hermes/inspector/tools/msggen/src/Type";
 
 export default class WeatherDetailScreen extends React.Component {
   constructor(props) {
@@ -83,6 +84,18 @@ export default class WeatherDetailScreen extends React.Component {
       </Text>
     );
   }
+  
+  renderLocation()
+ {
+   const longitude = this.state.coord.lon;
+   const latitude = this.state.coord.lat;
+   return (
+       <Text>
+         경도: {longitude.toFixed(1)}
+         위도: {latitude.toFixed(1)}
+       </Text>
+   )
+ }
 
   renderClouds() {
     const clouds = _get(this.state, ["clouds", "all"], null);
@@ -182,6 +195,49 @@ export default class WeatherDetailScreen extends React.Component {
     );
   }
 
+renderData(){
+      const data =this.state.weather.main;
+      var condition;
+
+      if(data=="ThunderStorm")
+      {
+          condition= ['#3C3B3F','#605C3C'];
+      }
+      else if(data=="Drizzle")
+      {
+          condition=['#F0F2F0','#000C40'];
+      }
+      else if(data=="Rain")
+      {
+          condition= ['#355C7D','#6C5B7B','#C06C84'];
+
+      }
+      else if(data=="Snow")
+      {
+          condition= ['#FFEEEE','#DDEFBB'];
+
+      }
+      else if(data=="Atmosphere")
+      {
+          condition=['#1F1C2C','#928DAB'];
+
+      }
+      else if(data=="Clear")
+      {
+          condition= ['#667db6','#0082c8','#667db6'];
+
+      }
+      else if(data=="Clouds")
+      {
+          condition= ['#353447','#1e2c52']
+      }
+      else
+      {
+          condition= ['#6c446c','#350f4c']
+      }
+      return condition;
+  }
+
   render() {
     const {
       route: {
@@ -202,10 +258,12 @@ export default class WeatherDetailScreen extends React.Component {
 
     return (
       <LinearGradient
-      colors={['#448AFF', '#9E9E9E', '#FFEB3B', '#FF5722']}
+      colors={this.renderData()}
       style={styles.container}
       >
+      <StatusBar barStyle={"light-content"} />
       <View style={styles.container}>
+        {this.renderLocation()}
         {this.renderClouds()}
         {this.renderTemperature()}
         {this.renderFeelsLike()}
