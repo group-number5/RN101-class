@@ -3,7 +3,6 @@ import { FlatList, StyleSheet, Text, TouchableOpacity,Platform,ActivityIndicator
 import { SearchBar } from 'react-native-elements';
 import cityListApi from '../api/CityListApi';
 
-
 export default class CityList extends React.Component {
   constructor(props) {
     super(props);
@@ -38,7 +37,10 @@ export default class CityList extends React.Component {
 
   renderItem(city) {
     return (
-      <TouchableOpacity style={styles.item} onPress={() => this.onPressCity(city)}>
+      <TouchableOpacity
+        style={styles.item}
+        onPress={() => this.onPressCity(city)}
+      >
         <Text style={styles.text}>{city}</Text>
       </TouchableOpacity>
     );
@@ -89,10 +91,10 @@ export default class CityList extends React.Component {
         value={this.state.search}
       />
       <FlatList
-       numColumns={3} 
+        style={styles.container}
+        numColumns={3}
         Data={this.state.dataSource}
         ItemSeparatorComponent={this.ListViewItemSeparator}
-
         renderItem={({ item }) => this.renderItem(item)}
         keyExtractor={item => item}
         data={this.state.cities}
@@ -104,16 +106,16 @@ export default class CityList extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#000",
   },
   item: {
     flex: 1,
     height: 50,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   text: {
     fontSize: 14,
-    textAlign: 'center',
-  }
+    textAlign: "center",
+    color: "#fff",
+  },
 });
