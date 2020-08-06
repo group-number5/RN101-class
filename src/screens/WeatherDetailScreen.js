@@ -1,11 +1,12 @@
 import React from 'react';
-import { ActivityIndicator, Image, StyleSheet, View, Text } from 'react-native';
+import {ActivityIndicator, Image, StyleSheet, View, Text, StatusBar} from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import openWeatherApi from '../api/OpenWeatherApi';
 import Constants from 'expo-constants';
 import _get from 'lodash.get';
 import { LinearGradient } from 'expo-linear-gradient';
 import Icon from 'react-native-vector-icons/Feather';
+import {PropsType} from "react-native/ReactCommon/hermes/inspector/tools/msggen/src/Type";
 
 export default class WeatherDetailScreen extends React.Component {
   constructor(props) {
@@ -146,6 +147,8 @@ export default class WeatherDetailScreen extends React.Component {
     );
   }
 
+
+
   renderWeatherCondition() {
     // https://openweathermap.org/weather-conditions
     return this.state.weather.map(({
@@ -153,6 +156,7 @@ export default class WeatherDetailScreen extends React.Component {
       description,
     }, index) => {
       return (
+
         <View style={styles.weatherCondition} key={index}>
           <Image source={{
             uri: `http://openweathermap.org/img/wn/${icon}@2x.png`,
@@ -164,6 +168,8 @@ export default class WeatherDetailScreen extends React.Component {
       );
     });
   }
+
+
 
   renderGoogleMap() {
     const {
@@ -189,6 +195,7 @@ export default class WeatherDetailScreen extends React.Component {
     );
   }
 
+
   render() {
     const {
       route: {
@@ -206,12 +213,15 @@ export default class WeatherDetailScreen extends React.Component {
         </View>
       )
     }
+
     
     return (
       <LinearGradient
-      colors={['#448AFF', '#9E9E9E', '#FFEB3B', '#FF5722']}
+      colors={['#448aff', '#9E9E9E', '#ffeb3b', '#FF5722']}
       style={styles.container}
       >
+
+           <StatusBar barStyle={"light-content"} />
       <View style={styles.container}>
           {this.renderLocation()}
         {this.renderClouds()}
